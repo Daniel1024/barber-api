@@ -58,7 +58,7 @@ func (s *AppointmentService) Schedule(ctx context.Context, appt *domain.Appointm
 	return s.apptRepo.Create(ctx, appt)
 }
 
-func (s *AppointmentService) GetById(ctx context.Context, id uint) (*domain.Appointment, error) {
+func (s *AppointmentService) GetByID(ctx context.Context, id uint) (*domain.Appointment, error) {
 	return s.apptRepo.GetById(ctx, id)
 }
 
