@@ -12,7 +12,7 @@ var (
 
 type Appointment struct {
 	ID         uint      `gorm:"primary_key" json:"id"`
-	ClientNama string    `gorm:"size:100;not null" json:"client_nama"`
+	ClientName string    `gorm:"size:100;not null" json:"client_nama"`
 	StartTime  time.Time `gorm:"not null" json:"start_time"`
 	EndTime    time.Time `gorm:"not null" json:"end_time"`
 	Products   []Product `gorm:"many2many:appointment_products" json:"products"`
