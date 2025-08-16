@@ -11,12 +11,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type AppointmentHandle struct {
+type AppointmentHandler struct {
 	svc *service.AppointmentService
 }
 
-func NewAppointmentHandle(svc *service.AppointmentService) *AppointmentHandle {
-	return &AppointmentHandle{svc}
+func NewAppointmentHandler(svc *service.AppointmentService) *AppointmentHandler {
+	return &AppointmentHandler{svc}
 }
 
 type CreateAppointmentRequest struct {
@@ -33,7 +33,7 @@ type UpdateAppointmentRequest struct {
 	Products   []uint `json:"products"`
 }
 
-func (h *AppointmentHandle) Create(c *gin.Context) {
+func (h *AppointmentHandler) Create(c *gin.Context) {
 	var req CreateAppointmentRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -72,7 +72,7 @@ func (h *AppointmentHandle) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, appt)
 }
 
-func (h *AppointmentHandle) List(c *gin.Context) {
+func (h *AppointmentHandler) List(c *gin.Context) {
 	appoints, err := h.svc.ListAll(c.Request.Context())
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -85,7 +85,7 @@ func (h *AppointmentHandle) List(c *gin.Context) {
 	})
 }
 
-func (h *AppointmentHandle) Get(c *gin.Context) {
+func (h *AppointmentHandler) Get(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.ParseUint(idStr, 10, 32)
 	if err != nil {
@@ -106,7 +106,7 @@ func (h *AppointmentHandle) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, appt)
 }
 
-func (h *AppointmentHandle) Update(c *gin.Context) {
+func (h *AppointmentHandler) Update(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.ParseUint(idStr, 10, 32)
 	if err != nil {
@@ -153,7 +153,7 @@ func (h *AppointmentHandle) Update(c *gin.Context) {
 	c.JSON(http.StatusOK, appt)
 }
 
-func (h *AppointmentHandle) Delete(c *gin.Context) {
+func (h *AppointmentHandler) Delete(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.ParseUint(idStr, 10, 32)
 	if err != nil {
@@ -173,7 +173,7 @@ func (h *AppointmentHandle) Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "turno cancelado"})
 }
 
-func (h *AppointmentHandle) GetTotal(c *gin.Context) {
+func (h *AppointmentHandler) GetTotal(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.ParseUint(idStr, 10, 32)
 	if err != nil {
